@@ -115,7 +115,23 @@
                 type: 'get',
                 data: {},
                 success: function(response) {
+                    //jika ada yang menekan tombol booking ambil jumlah notifikasi yang dikirim
                     document.getElementById('notif').innerText = response.notifikasi
+                    //hapus yang ada dalam tbody sebelum diperharui
+                    $('#table-users tbody tr').remove()
+                    //buat variable yang akan menampung isi tbody yang baru 
+                    var table = ''
+                    var no = 0
+                    for (const key in response.user) {
+                        no += 1
+                        // console.log(response.user[key].name);
+                        table += "<tr><td>" + no + "</td>" +
+                            "<td>" + response.user[key].name + "</td>" +
+                            "<td><a href='' class='btn btn-danger btn-sm disabled'>Tolak</a> <a href='' class='btn btn-success btn-sm'>Konfirmasi</a>" +
+                            "</td></tr>"
+                    }
+                    //perbaharui table users jika ada user baru
+                    $('#table-users').append(table)
                 },
                 error: function() {
                     console.log('Error')

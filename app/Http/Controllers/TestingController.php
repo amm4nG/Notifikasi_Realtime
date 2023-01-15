@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\MyEvent;
 use App\Models\Notifikasi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,8 +22,11 @@ class TestingController extends Controller
     { 
         //kirim jumlah notifikasi yang ada dalam database sesuai id user
         $notifikasi = Notifikasi::where('id_user', Auth::user()->id)->count(); 
+        $user = User::where('role', 'user')->get();
         return response()->json([
-            'notifikasi' => $notifikasi
+            'notifikasi' => $notifikasi,
+            'count' => $user->count(),
+            'user' => $user
         ]);
     }
 
